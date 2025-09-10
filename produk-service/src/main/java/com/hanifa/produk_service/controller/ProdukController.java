@@ -42,4 +42,10 @@ public class ProdukController {
         produkService.deleteProduk(id);
         return ResponseEntity.ok().build();
     }
+
+    // @GetMapping("/product/{id}")
+    // public ResponseEntity<List<ResponseTemplate>> getOrderWithProductById(@PathVariable Long id) {
+    //     List<ResponseTemplate> responseTemplate = orderService.getAllOrderWithProductAndCustomer(id);
+    //     return responseTemplate != null ? ResponseEntity.ok(responseTemplate): ResponseEntity.notFound().build();
+    // }
 }
