@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 
 import com.hanifa.pengembalian_service.model.Pengembalian;
 
-@Repository
 public interface PengembalianRepository extends JpaRepository<Pengembalian, Long> {
 
 }

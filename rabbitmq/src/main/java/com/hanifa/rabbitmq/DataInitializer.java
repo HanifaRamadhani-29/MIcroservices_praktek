@@ -15,9 +15,9 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Data sample untuk testing
-        Order order1 = new Order("Laptop", 1, 15000000.0, "abdhusyukra02@gmail.com");
+        Order order1 = new Order("Laptop", 1, 15000000.0, "hanifaramadhani2910@gmail.com");
         Order order2 = new Order("Mouse", 2, 250000.0, "nadyahermaliaputri18@gmail.com");
-        Order order3 = new Order("Keyboard", 1, 500000.0, "hanifaramadhani041029@gmail.com");
+        Order order3 = new Order("Keyboard", 1, 500000.0, "ervan@pnp.ac.id");
 
         orderProducerService.createAndSendOrder(order1);
         orderProducerService.createAndSendOrder(order2);

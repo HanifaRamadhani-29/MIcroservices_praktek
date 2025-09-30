@@ -9,21 +9,21 @@ import com.hanifa.pelanggan_service.repository.PelangganRepository;
 @Service
 public class PelangganService {
     @Autowired
-    private PelangganRepository pelangganRepository;
+    private PelangganRepository PelangganRepository;
 
     public List<Pelanggan> getAllPelanggans(){
-    return pelangganRepository.findAll();
+    return PelangganRepository.findAll();
     }
 
     public Pelanggan getPelangganById(Long id) {
-    return pelangganRepository.findById(id).orElse(null);
+    return PelangganRepository.findById(id).orElse(null);
     }
 
     public Pelanggan createPelanggan(Pelanggan pelanggan){
-    return pelangganRepository.save(pelanggan);
+    return PelangganRepository.save(pelanggan);
     }
 
     public void deletePelanggan (Long id){
-    pelangganRepository.deleteById(id);
-}
+    PelangganRepository.deleteById(id);
+    }
 }

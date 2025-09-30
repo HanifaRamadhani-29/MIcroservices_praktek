@@ -1,3 +1,6 @@
+server:
+  port: 8089 # Port di mana service ini berjalan
+
 spring:
   application:
     name: anggota-service # Nama unik untuk service ini

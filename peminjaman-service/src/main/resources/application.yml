@@ -1,8 +1,31 @@
 spring:
   application:
-    name: peminjaman_service # Nama unik untuk service ini
+    name: peminjaman-service
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: hanifaramadhani2910@gmail.com
+    password: bbqabxmferriegwm
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8090 # port untuk peminjaman-service
 
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/ # Alamat server Eureka
+      defaultZone: http://localhost:8761/eureka/ # alamat eureka server
+    register-with-eureka: true
+    fetch-registry: true

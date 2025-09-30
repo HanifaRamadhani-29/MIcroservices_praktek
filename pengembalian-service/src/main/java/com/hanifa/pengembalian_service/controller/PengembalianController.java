@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.hanifa.pengembalian_service.model.Pengembalian;
 import com.hanifa.pengembalian_service.service.PengembalianService;
+import com.hanifa.pengembalian_service.vo.ResponseTemplate;
 
 @RestController
 @RequestMapping("/api/pengembalian")
@@ -22,12 +23,12 @@ public class PengembalianController {
     private PengembalianService pengembalianService;
 
     @GetMapping
-    public List<Pengembalian> getAllPengembalian() {
-        return pengembalianService.getAllPengembalian();
+    public List<Pengembalian> getAllPengembalians() {
+        return pengembalianService.getAllPengembalians();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Pengembalian> getPengambalianById(@PathVariable Long id) {
+    public ResponseEntity<Pengembalian> getPengembalianById(@PathVariable Long id) {
         Pengembalian pengembalian = pengembalianService.getPengembalianById(id);
         return pengembalian != null ? ResponseEntity.ok(pengembalian) : ResponseEntity.notFound().build();
     }
@@ -42,4 +43,11 @@ public class PengembalianController {
         pengembalianService.deletePengembalian(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/peminjaman/{id}")
+    public ResponseEntity<List<ResponseTemplate>> getPengembalianWithPeminjamanById(@PathVariable Long id) {
+        List<ResponseTemplate> responseTemplate = pengembalianService.getPengembalianWithPeminjamanById(id);
+        return responseTemplate != null ? ResponseEntity.ok(responseTemplate): ResponseEntity.notFound().build();
+    }
+
 }

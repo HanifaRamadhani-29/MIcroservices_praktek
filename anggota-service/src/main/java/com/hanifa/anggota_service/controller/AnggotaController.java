@@ -23,7 +23,7 @@ public class AnggotaController {
 
     @GetMapping
     public List<Anggota> getAllAnggota() {
-        return anggotaService.getAllAnggota();
+        return anggotaService.getAllAnggotas();
     }
 
     @GetMapping("/{id}")

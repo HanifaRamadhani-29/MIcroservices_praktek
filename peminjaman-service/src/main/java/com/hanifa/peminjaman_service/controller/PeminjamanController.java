@@ -19,36 +19,34 @@ import com.hanifa.peminjaman_service.vo.ResponseTemplate;
 @RestController
 @RequestMapping("/api/peminjaman")
 public class PeminjamanController {
-
     @Autowired
     private PeminjamanService peminjamanService;
 
-    // Endpoint ini akan mengembalikan daftar peminjaman dasar tanpa detail
     @GetMapping
     public List<Peminjaman> getAllPeminjamans() {
         return peminjamanService.getAllPeminjamans();
     }
 
-    // Endpoint ini akan mengembalikan detail lengkap peminjaman
-    // URL: http://127.0.0.1:8083/api/peminjaman/1 (jika id=1)
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseTemplate> getPeminjamanWithDetailsById(@PathVariable Long id) {
-        ResponseTemplate response = peminjamanService.getPeminjamanWithDetailsById(id);
-        if (response != null) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Peminjaman> getPeminjamanById(@PathVariable Long id) {
+        Peminjaman peminjaman = peminjamanService.getPeminjamanById(id);
+        return peminjaman != null ? ResponseEntity.ok(peminjaman) : ResponseEntity.notFound().build();
     }
-    
-    @PostMapping
+
+    @PostMapping // Modified to accept Peminjaman object directly
     public Peminjaman createPeminjaman(@RequestBody Peminjaman peminjaman) {
         return peminjamanService.createPeminjaman(peminjaman);
     }
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePeminjaman(@PathVariable Long id) {
+    public ResponseEntity<?> deletePeminjaman(@PathVariable Long id) {
         peminjamanService.deletePeminjaman(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/buku/{id}")
+    public ResponseEntity<List<ResponseTemplate>> getPeminjamanWithBookById(@PathVariable Long id) {
+        List<ResponseTemplate> responseTemplate = peminjamanService.getPeminjamanWithBookById(id);
+        return responseTemplate != null ? ResponseEntity.ok(responseTemplate): ResponseEntity.notFound().build();
     }
 }
