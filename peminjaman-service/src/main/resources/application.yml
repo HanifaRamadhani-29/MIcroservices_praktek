@@ -20,6 +20,13 @@ spring:
           starttls:
             enable: true
 
+    data:
+    mongodb:
+      # Gunakan URI lengkap termasuk kredensial dan authSource
+      # Ganti 'perpustakaan_read_db' dengan nama database yang Anda inginkan,
+      # misalnya, 'peminjaman_read_model' agar konsisten dengan contoh kode.
+      uri: mongodb://admin:password@localhost:27017/perpustakaan_read_db?authSource=admin
+
 server:
   port: 8090 # port untuk peminjaman-service
 

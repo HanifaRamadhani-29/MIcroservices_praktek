@@ -6,17 +6,19 @@ public class Anggota {
     private String nama;
     private String alamat;
     private String jenis_kelamin;
+    private String email;
 
     public Anggota(){
 
     }
 
-    public Anggota(Long id, String nim, String nama, String alamat, String jenis_kelamin) {
+    public Anggota(Long id, String nim, String nama, String alamat, String jenis_kelamin, String email) {
         this.id = id;
         this.nim = nim;
         this.nama = nama;
         this.alamat = alamat;
         this.jenis_kelamin = jenis_kelamin;
+        this.email = email;
     }
 
     public Long getId() {
@@ -57,6 +59,14 @@ public class Anggota {
 
     public void setJenis_kelamin(String jenis_kelamin) {
         this.jenis_kelamin = jenis_kelamin;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
