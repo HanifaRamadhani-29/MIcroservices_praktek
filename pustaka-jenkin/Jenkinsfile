@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build & Deploy Pustaka') {
+            steps {
+                // Masuk ke folder tugas-pustaka dulu sebelum jalanin docker
+                dir('tugas-pustaka') {
+                    echo 'Sedang memproses tugas pustaka...'
+                    sh 'docker-compose up -d --build'
+                }
+            }
+        }
+        
+        stage('Verifikasi') {
+            steps {
+                sh 'docker ps'
+            }
+        }
+    }
+}

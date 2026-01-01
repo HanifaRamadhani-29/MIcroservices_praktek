@@ -1,0 +1,12 @@
+global:
+  scrape_interval: 5s # Narik data tiap 5 detik
+
+scrape_configs:
+  - job_name: "pustaka-microservices"
+    metrics_path: "/actuator/prometheus"
+    static_configs:
+      - targets:
+          - "anggota:8081"
+          - "buku:8082"
+          - "peminjaman:8083"
+          - "pengembalian:8084"
