@@ -2,18 +2,26 @@ pipeline {
     agent any
 
     stages {
-        stage('Build & Deploy Pustaka') {
+        stage('Ambil Kode') {
             steps {
-                // Masuk ke folder tugas-pustaka dulu sebelum jalanin docker
-                dir('tugas-pustaka') {
-                    echo 'Sedang memproses tugas pustaka...'
+                // Pastikan URL repo kamu benar
+                git branch: 'main', url: 'https://github.com/HanifaRamadhani-29/MIcroservices_praktek'
+            }
+        }
+
+        stage('Build & Run Microservices') {
+            steps {
+                echo 'Sedang masuk ke folder pustaka-jenkin...'
+                // GANTI tugas-pustaka MENJADI pustaka-jenkin
+                dir('pustaka-jenkin') {
                     sh 'docker-compose up -d --build'
                 }
             }
         }
-        
+
         stage('Verifikasi') {
             steps {
+                echo 'Cek container yang sedang jalan:'
                 sh 'docker ps'
             }
         }
