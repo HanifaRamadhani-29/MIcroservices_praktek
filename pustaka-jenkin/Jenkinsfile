@@ -4,16 +4,21 @@ pipeline {
     stages {
         stage('Ambil Kode') {
             steps {
-                // Pastikan URL repo kamu benar
                 git branch: 'main', url: 'https://github.com/HanifaRamadhani-29/MIcroservices_praktek'
             }
         }
 
         stage('Build & Run Microservices') {
             steps {
-                echo 'Membersihkan container lama dan menjalankan yang baru...'
                 dir('pustaka-jenkin') {
-                    // Berhenti dulu baru jalanin lagi (agar bersih)
+                    echo 'Membersihkan folder palsu dan container lama...'
+                    // SCRIPT SAKTI: Cek jika prometheus.yml itu folder, maka hapus!
+                    sh '''
+                    if [ -d "prometheus.yml" ]; then rm -rf prometheus.yml; fi
+                    if [ -d "loki-config.yml" ]; then rm -rf loki-config.yml; fi
+                    git checkout prometheus.yml loki-config.yml || echo "File aslinya belum ada di Git"
+                    '''
+                    
                     sh 'docker-compose down'
                     sh 'docker-compose up -d --build'
                 }
@@ -22,7 +27,6 @@ pipeline {
 
         stage('Verifikasi') {
             steps {
-                echo 'Cek container yang sedang jalan:'
                 sh 'docker ps'
             }
         }
