@@ -18,13 +18,13 @@ services:
     image: prom/prometheus
     container_name: prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prom-pustaka.yml:/etc/prometheus/prometheus.yml
     ports: ["9090:9090"]
   loki:
     image: grafana/loki:latest
     ports: ["3100:3100"]
     volumes:
-      - ./loki-config.yml:/etc/loki/local-config.yaml
+      - ./loki-pustaka.yml:/etc/loki/local-config.yaml
   grafana:
     image: grafana/grafana
     container_name: grafana
