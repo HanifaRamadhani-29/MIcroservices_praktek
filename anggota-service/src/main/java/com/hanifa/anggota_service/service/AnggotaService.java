@@ -11,19 +11,19 @@ public class AnggotaService {
     @Autowired
     private AnggotaRepository AnggotaRepository;
 
-    public List<Anggota> getAllAnggotas(){
-    return AnggotaRepository.findAll();
+    public List<Anggota> getAllAnggotas() {
+        return AnggotaRepository.findAll();
     }
 
     public Anggota getAnggotaById(Long id) {
-    return AnggotaRepository.findById(id).orElse(null);
+        return AnggotaRepository.findById(id).orElse(null);
     }
 
-    public Anggota createAnggota(Anggota anggota){
-    return AnggotaRepository.save(anggota);
+    public Anggota createAnggota(Anggota anggota) {
+        return AnggotaRepository.save(anggota);
     }
 
-    public void deleteAnggota (Long id){
-    AnggotaRepository.deleteById(id);
+    public void deleteAnggota(Long id) {
+        AnggotaRepository.deleteById(id);
     }
 }

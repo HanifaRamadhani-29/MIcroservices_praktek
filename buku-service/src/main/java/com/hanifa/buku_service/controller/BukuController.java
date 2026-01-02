@@ -3,14 +3,9 @@ package com.hanifa.buku_service.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hanifa.buku_service.model.Buku;
 import com.hanifa.buku_service.service.BukuService;
@@ -18,28 +13,46 @@ import com.hanifa.buku_service.service.BukuService;
 @RestController
 @RequestMapping("/api/buku")
 public class BukuController {
+
     @Autowired
     private BukuService bukuService;
 
+    // GET /api/buku
     @GetMapping
-    public List<Buku> getAllBuku() {
-        return bukuService.getAllBukus();
+    public ResponseEntity<List<Buku>> getAllBuku() {
+        List<Buku> bukus = bukuService.getAllBukus();
+        return ResponseEntity.ok(bukus);
     }
 
+    // GET /api/buku/{id}
     @GetMapping("/{id}")
     public ResponseEntity<Buku> getBukuById(@PathVariable Long id) {
         Buku buku = bukuService.getBukuById(id);
-        return buku != null ? ResponseEntity.ok(buku) : ResponseEntity.notFound().build();
+
+        if (buku == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(buku);
     }
 
+    // POST /api/buku
     @PostMapping
-    public Buku createBuku(@RequestBody Buku buku) {
-        return bukuService.createBuku(buku);
+    public ResponseEntity<Buku> createBuku(@RequestBody Buku buku) {
+        Buku savedBuku = bukuService.createBuku(buku);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBuku);
     }
-    
+
+    // DELETE /api/buku/{id}
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteBuku(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBuku(@PathVariable Long id) {
+        Buku buku = bukuService.getBukuById(id);
+
+        if (buku == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         bukuService.deleteBuku(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

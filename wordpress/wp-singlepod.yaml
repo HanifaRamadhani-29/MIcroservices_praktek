@@ -1,0 +1,81 @@
+# --- 1. POD MariaDB (Nama Pod: mysql-pod) ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysql-pod
+  labels:
+    app: wordpress
+    tier: mysql
+spec:
+  containers:
+  - image: mariadb:10.6
+    name: mysql-container
+    ports:
+    - containerPort: 3306
+    env:
+    - name: MYSQL_ROOT_PASSWORD
+      value: "12345678"
+    - name: MYSQL_DATABASE
+      value: "wordpress_db_name"
+    - name: MYSQL_USER
+      value: "wordpress_user"
+    - name: MYSQL_PASSWORD
+      value: "12345678"
+---
+# 2. Service MariaDB (Koneksi Internal)
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    app: wordpress
+    tier: mysql
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: wordpress
+    tier: mysql
+  type: ClusterIP 
+---
+# --- 3. POD WordPress (Nama Pod: wordpress-pod) ---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wordpress-pod
+  labels:
+    app: wordpress
+    tier: frontend
+spec:
+  containers:
+  - image: wordpress:latest
+    name: wordpress-container
+    ports:
+    - containerPort: 80
+    env:
+    - name: WORDPRESS_DB_HOST
+      value: mysql-service:3306 # Menggunakan nama Service di atas
+    - name: WORDPRESS_DB_USER
+      value: wordpress_user
+    - name: WORDPRESS_DB_PASSWORD
+      value: "12345678"
+    - name: WORDPRESS_DB_NAME
+      value: wordpress_db_name
+---
+# 4. Service WordPress (Akses Eksternal)
+apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-service
+  labels:
+    app: wordpress
+    tier: frontend
+spec:
+  ports:
+  - port: 80 
+    targetPort: 80 
+    nodePort: 30007
+  selector:
+    app: wordpress
+    tier: frontend
+  type: NodePort
