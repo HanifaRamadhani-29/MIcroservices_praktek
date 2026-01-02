@@ -15,16 +15,18 @@ services:
 
   # Tambahkan Prometheus & Grafana seperti di jawaban sebelumnya
   prometheus:
-    image: prom/prometheus
-    container_name: prometheus
-    volumes:
-      - ./prom-pustaka.yml:/etc/prometheus/prometheus.yml
-    ports: ["9090:9090"]
+    build:
+      context: .
+      dockerfile: Dockerfile-prom
+    ports:
+      - "9090:9090"
+
   loki:
-    image: grafana/loki:latest
-    ports: ["3100:3100"]
-    volumes:
-      - ./loki-pustaka.yml:/etc/loki/local-config.yaml
+    build:
+      context: .
+      dockerfile: Dockerfile-loki
+    ports:
+      - "3100:3100"
   grafana:
     image: grafana/grafana
     container_name: grafana

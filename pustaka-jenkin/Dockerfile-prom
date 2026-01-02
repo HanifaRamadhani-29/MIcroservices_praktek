@@ -1,0 +1,2 @@
+FROM prom/prometheus:latest
+COPY prom-pustaka.yml /etc/prometheus/prometheus.yml
