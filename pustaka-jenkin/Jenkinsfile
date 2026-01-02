@@ -11,9 +11,10 @@ pipeline {
 
         stage('Build & Run Microservices') {
             steps {
-                echo 'Sedang masuk ke folder pustaka-jenkin...'
-                // GANTI tugas-pustaka MENJADI pustaka-jenkin
+                echo 'Membersihkan container lama dan menjalankan yang baru...'
                 dir('pustaka-jenkin') {
+                    // Berhenti dulu baru jalanin lagi (agar bersih)
+                    sh 'docker-compose down'
                     sh 'docker-compose up -d --build'
                 }
             }
