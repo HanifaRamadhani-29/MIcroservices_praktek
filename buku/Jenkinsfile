@@ -9,9 +9,9 @@ pipeline {
     stages {
         stage('1. Setup Workspace & Checkout') {
             steps {
-                ws("D:\jenkins/${IMAGE_NAME}") {
+                ws("D:/jenkins/${IMAGE_NAME}") {
                     checkout scm
-                    echo "Workspace set to D:\jenkins/${IMAGE_NAME}"
+                    echo "Workspace set to D:/jenkins/${IMAGE_NAME}"
                     
                     dir('buku') {
                         echo '2. Building JAR...'
