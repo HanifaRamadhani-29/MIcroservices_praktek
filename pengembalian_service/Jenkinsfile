@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('CI/CD Process') {
             steps {
-                ws("F:/Jenkins/workspace/${IMAGE_NAME}") {
+                ws("D:\jenkins/${IMAGE_NAME}") {
                     checkout scm
                     dir('pengembalian_service') {
                         bat 'mvn clean package -DskipTests'
