@@ -20,26 +20,28 @@ public class AnggotaConsumer {
     public void handleAnggotaUpdate(PengembalianEvent event) {
         // 1. VALIDASI NULL (Pencegah Looping)
         if (event == null || event.getIdAnggota() == null) {
-            log.error("RABBITMQ_ERROR: Menerima pesan NULL atau ID Anggota Kosong. Pesan diabaikan agar tidak looping.");
+            log.error(
+                    "RABBITMQ_ERROR: Menerima pesan NULL atau ID Anggota Kosong. Pesan diabaikan agar tidak looping.");
             return; // Kita return biasa (ACK), supaya pesan dihapus dari antrean oleh RabbitMQ
         }
 
-        log.info("RABBITMQ_RECEIVER: Memproses Anggota ID: {}", event.getIdAnggota());
+        log.info("RABBITMQ_RECEIVER: Memproses anggota ID: {}", event.getIdAnggota());
 
         try {
             // 2. Gunakan findById dengan aman
             anggotaRepository.findById(event.getIdAnggota()).ifPresentOrElse(anggota -> {
-                
+
                 if (event.getDenda() <= 0) {
                     log.info("AUDIT_LOG: Anggota {} dalam status aman (tanpa denda).", anggota.getNama());
                 } else {
-                    log.info("AUDIT_LOG: Anggota {} mengembalikan dengan denda Rp {}", anggota.getNama(), event.getDenda());
+                    log.info("AUDIT_LOG: Anggota {} mengembalikan dengan denda Rp {}", anggota.getNama(),
+                            event.getDenda());
                 }
-                
+
                 anggotaRepository.save(anggota);
-                
+
             }, () -> log.warn("AUDIT_LOG: Data Anggota ID {} tidak ditemukan di database.", event.getIdAnggota()));
-            
+
         } catch (Exception e) {
             log.error("SYSTEM_ERROR: Terjadi kesalahan saat akses database: {}", e.getMessage());
             // Jangan lempar exception (throw) ke atas agar tidak re-queue terus menerus
