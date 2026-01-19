@@ -30,7 +30,7 @@ public class BukuController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         commandHandler.handleDelete(id);
-        return ResponseEntity.ok("Buku dihapus cok");
+        return ResponseEntity.ok("Buku berhasil dihapus");
     }
 
     @GetMapping
