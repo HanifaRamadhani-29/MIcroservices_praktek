@@ -12,8 +12,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/buku")
 public class BukuController {
-    @Autowired private BukuCommandHandler commandHandler;
-    @Autowired private BukuQueryHandler queryHandler;
+    @Autowired
+    private BukuCommandHandler commandHandler;
+    @Autowired
+    private BukuQueryHandler queryHandler;
 
     @PostMapping
     public ResponseEntity<Buku> create(@RequestBody Buku buku) {
@@ -28,7 +30,7 @@ public class BukuController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
         commandHandler.handleDelete(id);
-        return ResponseEntity.ok("Buku Berhasil Dihapus");
+        return ResponseEntity.ok("Buku dihapus cok");
     }
 
     @GetMapping
